@@ -1,0 +1,1 @@
+export const API_ROOT_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : 'https://indexing-demo.vercel.app/api';
