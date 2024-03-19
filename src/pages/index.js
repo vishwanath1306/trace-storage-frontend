@@ -1,11 +1,11 @@
-import Logo from '@/components/Logo';
-import { create } from '@/utils/api/session';
-import { useLocalStorage } from 'primereact/hooks';
-import { useCookie } from '@/utils/hooks/useCookie';
+import Logo from "@/components/Logo";
+import { create } from "@/utils/api/session";
+import { useLocalStorage } from "primereact/hooks";
+import { useCookie } from "@/utils/hooks/useCookie";
 import React, { useState, useEffect, useRef } from "react";
 import { useForm, Controller, set } from "react-hook-form";
-import { useRouter } from 'next/router';
-import { classNames } from 'primereact/utils';
+import { useRouter } from "next/router";
+import { classNames } from "primereact/utils";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 
@@ -13,40 +13,61 @@ import { Dropdown } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
 
-import { PageContainer, ElementContainer, FrameContainer } from '@/layout/Containers';
+import {
+  PageContainer,
+  ElementContainer,
+  FrameContainer,
+} from "@/layout/Containers";
 
-import { applications, embeddingMethods, vectorStores } from '@/constants/options';
-import { getRadioButtonHookForm } from '@/utils/ui/buttons';
-import { Divider } from '@/layout/Elements';
+import {
+  applications,
+  embeddingMethods,
+  vectorStores,
+} from "@/constants/options";
+import { getRadioButtonHookForm } from "@/utils/ui/buttons";
+import { Divider } from "@/layout/Elements";
+import MainLayout from "@/layout/Layout";
+
 
 export default function Home() {
-
   const toast = useRef(null);
   const router = useRouter();
-  const [sessionIdLocalStorage, setSessionIdLocalStorage] = useLocalStorage('0', 'session_id');
-  const [sessionIdCookie, setSessionIdCookie] = useCookie(null, 'session_id');
+  const [sessionIdLocalStorage, setSessionIdLocalStorage] = useLocalStorage(
+    "0",
+    "session_id"
+  );
+  const [sessionIdCookie, setSessionIdCookie] = useCookie(null, "session_id");
   const [sessionId, setSessionId] = useState(null);
 
   const show = (data) => {
-    toast.current.show({ severity: 'info', summary: 'Data Submitted', detail: JSON.stringify(data), life: 3000 });
+    toast.current.show({
+      severity: "info",
+      summary: "Data Submitted",
+      detail: JSON.stringify(data),
+      life: 3000,
+    });
   };
 
   const error = (data) => {
-    toast.current.show({ severity: 'error', summary: 'Error', detail: JSON.stringify(data), life: 3000 });
-  }
+    toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: JSON.stringify(data),
+      life: 3000,
+    });
+  };
 
   const defaultValues = {
-    session_name: 'Test Session 1',
+    session_name: "Test Session 1",
     application_name: "SSH",
     request_file: null,
     embedding_method: "Google",
-    vector_database: "Milvus"
+    vector_database: "Milvus",
   };
 
   const redirect = (path) => {
     router.push(path);
-  }
-
+  };
 
   const {
     control,
@@ -55,12 +76,10 @@ export default function Home() {
     setValue,
   } = useForm({ defaultValues });
 
-
-
   const onFileSelect = (e) => {
     const file = e.files[0];
-    setValue('request_file', file, { shouldValidate: true });
-  }
+    setValue("request_file", file, { shouldValidate: true });
+  };
 
   const onSubmit = async (data) => {
     const response = await create(data);
@@ -77,140 +96,147 @@ export default function Home() {
   };
 
   const getFormErrorMessage = (name) => {
-    return errors[name] ? <small className="p-error">{errors[name].message}</small> : <small className="p-error">&nbsp;</small>;
+    return errors[name] ? (
+      <small className="p-error">{errors[name].message}</small>
+    ) : (
+      <small className="p-error">&nbsp;</small>
+    );
   };
 
   return (
-    <div className="flex flex-column align-items-center gap-2 ">
-      <Toast ref={toast} />
-      <PageContainer >
-        <Logo />
-        <FrameContainer>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex">
-              <Controller
-                name="session_name"
-                control={control}
-                rules={{ required: 'Session name is required' }}
-                render={({ field, fieldState }) => (
-                  <div >
-                    <div className="flex">
-                      <ElementContainer>
-                        <InputText
-                          id={field.name}
-                          {...field}
-                          className={classNames({ 'p-invalid': fieldState.error })}
-                          value={field.value}
-                          onChange={(e) => field.onChange(e.target.value)}
-                          placeholder="Enter session name"
-
-                        />
-                      </ElementContainer>
-                      {getFormErrorMessage("initials")}
-                    </div>
-                  </div>
-                )}
-              />
-              <Controller
-                name="application_name"
-                control={control}
-                rules={{ required: 'Application is required' }}
-                render={({ field, fieldState }) => (
-                  <ElementContainer>
-                    <Dropdown
-                      id={field.name}
-                      {...field}
-                      value={field.value}
-                      options={applications}
-                      optionLabel="name"
-                      focusInputRef={field.ref}
-                      placeholder="Select an application"
-                      onChange={(e) => field.onChange(e.value)}
-                      className={classNames({ 'p-invalid': fieldState.error })}
-                    />
-                  </ElementContainer>
-                )}
-              />
-            </div>
-            <div>
-              <Controller
-                name="request_file"
-                control={control}
-                // rules={{ required: 'Request file is required' }}
-                render={({ field, fieldState }) => (
-                  <div>
+    <MainLayout>
+      <div style={{ minHeight: "80vh" }}>
+        <Toast ref={toast} />
+        <form
+          style={{
+            display: "flex",
+            flexDirection: " column",
+            alignItems: " center",
+          }}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="flex">
+            <Controller
+              name="session_name"
+              control={control}
+              rules={{ required: "Session name is required" }}
+              render={({ field, fieldState }) => (
+                <div>
+                  <div className="flex">
                     <ElementContainer>
-                      {/* <div className="text-2xl font-medium text-900 mb-2">Request File</div> */}
-                      <FileUpload
+                      <InputText
                         id={field.name}
-                        name={field.name}
-                        mode="basic"
-                        accept=".log"
-                        maxFileSize={1000000}
-                        onSelect={onFileSelect}
-                        className={classNames({ 'p-invalid': fieldState.error })}
+                        {...field}
+                        className={classNames({
+                          "p-invalid": fieldState.error,
+                        })}
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        placeholder="Enter session name"
                       />
                     </ElementContainer>
-                    {getFormErrorMessage("request_file")}
+                    {getFormErrorMessage("initials")}
                   </div>
-                )}
-              />
-            </div>
-            <div className="flex">
-              <Controller
-                name="embedding_method"
-                control={control}
-                rules={{ required: 'Embedding Method is required' }}
-                render={({ field, fieldState }) => (
-                  <div className="flex">
+                </div>
+              )}
+            />
+            <Controller
+              name="application_name"
+              control={control}
+              rules={{ required: "Application is required" }}
+              render={({ field, fieldState }) => (
+                <ElementContainer>
+                  <Dropdown
+                    id={field.name}
+                    {...field}
+                    value={field.value}
+                    options={applications}
+                    optionLabel="name"
+                    focusInputRef={field.ref}
+                    placeholder="Select an application"
+                    onChange={(e) => field.onChange(e.value)}
+                    className={classNames({
+                      "p-invalid": fieldState.error,
+                    })}
+                  />
+                </ElementContainer>
+              )}
+            />
+          </div>
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            <Controller
+              name="request_file"
+              control={control}
+              // rules={{ required: 'Request file is required' }}
+              render={({ field, fieldState }) => (
+                <div>
+                  <ElementContainer>
+                    {/* <div className="text-2xl font-medium text-900 mb-2">Request File</div> */}
+                    <FileUpload
+                      id={field.name}
+                      name={field.name}
+                      mode="basic"
+                      accept=".log"
+                      maxFileSize={1000000}
+                      onSelect={onFileSelect}
+                      className={classNames({
+                        "p-invalid": fieldState.error,
+                      })}
+                    />
+                  </ElementContainer>
+                  {getFormErrorMessage("request_file")}
+                </div>
+              )}
+            />
+          </div>
+          <div className="flex">
+            <Controller
+              name="embedding_method"
+              control={control}
+              rules={{ required: "Embedding Method is required" }}
+              render={({ field, fieldState }) => (
+                <div className="flex">
+                  <div>
                     <div>
-                      <ElementContainer>
-                        <div className="text-2xl font-medium  mb-2">Embedding Methods</div>
-                      </ElementContainer>
-                      <ElementContainer>
-                        {getRadioButtonHookForm(embeddingMethods, field, fieldState)}
-                      </ElementContainer>
+                      <div className="text-2xl font-medium  mb-2">
+                        Embedding Methods
+                      </div>
+                    </div>
+                    <div>
+                      {getRadioButtonHookForm(
+                        embeddingMethods,
+                        field,
+                        fieldState
+                      )}
                     </div>
                   </div>
+                </div>
+              )}
+            />
 
-                )}
-              />
+            <Divider />
 
-              <Divider />
-
-              <Controller
-                name="vector_database"
-                control={control}
-                rules={{ required: 'Vector Store is required' }}
-                render={({ field, fieldState }) => (
+            <Controller
+              name="vector_database"
+              control={control}
+              rules={{ required: "Vector Store is required" }}
+              render={({ field, fieldState }) => (
+                <div>
+                  <div className="text-2xl font-medium mb-2">Vector Store</div>
                   <div>
-                    <ElementContainer>
-                      <div className="text-2xl font-medium mb-2">Vector Store</div>
-                    </ElementContainer>
-                    <ElementContainer>
-                      {getRadioButtonHookForm(vectorStores, field, fieldState)}
-                    </ElementContainer>
+                    {getRadioButtonHookForm(vectorStores, field, fieldState)}
                   </div>
-                )}
-              />
+                </div>
+              )}
+            />
+          </div>
+          <div>
+            <div className="flex justify-content-center">
+              <Button type="submit" label="Submit" className=" mt-4 w-1/4" />
             </div>
-            <div>
-
-              <ElementContainer>
-                < div className="flex justify-content-center" >
-                  <Button
-                    type="submit"
-                    label="Submit"
-                    className=" mt-4 w-1/4"
-                  />
-                </div >
-              </ElementContainer>
-            </div>
-
-          </form >
-        </FrameContainer>
-      </PageContainer >
-    </div >
+          </div>
+        </form>
+      </div>
+    </MainLayout>
   );
 }
-
