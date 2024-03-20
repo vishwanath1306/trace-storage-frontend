@@ -7,45 +7,45 @@ import {
   Select,
   Spinner,
   useToast,
-} from '@chakra-ui/react'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+} from '@chakra-ui/react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 const fetchEmbeddings = async () => {
   // Placeholder for fetching embeddings from an API
   // Replace with actual API call
-  return ['Google', 'OpenAI']
-}
+  return ['Google', 'OpenAI'];
+};
 
 const fetchVectorStores = async () => {
   // Placeholder for fetching vector stores from an API
   // Replace with actual API call
-  return ['Milvus', 'Pinecone']
-}
+  return ['Milvus', 'Pinecone'];
+};
 
 const createSession = async (sessionData: any) => {
   // Placeholder for session creation API call
   // Replace with actual API call
-  console.log('Creating session with', sessionData)
-  return { success: true }
-}
+  console.log('Creating session with', sessionData);
+  return { success: true };
+};
 
 export const SessionForm = () => {
-  const toast = useToast()
-  const [sessionName, setSessionName] = useState('')
-  const [application, setApplication] = useState('')
-  const [file, setFile] = useState<File | null>(null)
-  const [embedding, setEmbedding] = useState('')
-  const [vectorStore, setVectorStore] = useState('')
+  const toast = useToast();
+  const [sessionName, setSessionName] = useState('');
+  const [application, setApplication] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const [embedding, setEmbedding] = useState('');
+  const [vectorStore, setVectorStore] = useState('');
 
   const { data: embeddings, isLoading: isLoadingEmbeddings } = useQuery(
     ['embeddings'],
     fetchEmbeddings,
-  )
+  );
   const { data: vectorStores, isLoading: isLoadingVectorStores } = useQuery(
     ['vectorStores'],
     fetchVectorStores,
-  )
+  );
 
   const { mutate: createSessionMutation, isLoading: isCreatingSession } =
     useMutation(createSession, {
@@ -55,7 +55,7 @@ export const SessionForm = () => {
           status: 'success',
           duration: 5000,
           isClosable: true,
-        })
+        });
       },
       onError: () => {
         toast({
@@ -63,20 +63,20 @@ export const SessionForm = () => {
           status: 'error',
           duration: 5000,
           isClosable: true,
-        })
+        });
       },
-    })
+    });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!sessionName || !application || !file || !embedding || !vectorStore) {
       toast({
         title: 'Please fill in all fields.',
         status: 'warning',
         duration: 5000,
         isClosable: true,
-      })
-      return
+      });
+      return;
     }
     createSessionMutation({
       sessionName,
@@ -84,8 +84,8 @@ export const SessionForm = () => {
       file,
       embedding,
       vectorStore,
-    })
-  }
+    });
+  };
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
@@ -155,5 +155,5 @@ export const SessionForm = () => {
         Create Session
       </Button>
     </Box>
-  )
-}
+  );
+};

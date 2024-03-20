@@ -1,4 +1,4 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme } from '@chakra-ui/react';
 
 // Extend the default theme to customize it.
 // Add your color modes, component styles, fonts, etc.
@@ -29,6 +29,6 @@ const theme = extendTheme({
     // Any other component customizations can go here
   },
   // You can also add custom colors, fonts, etc.
-})
+});
 
-export default theme
+export default theme;

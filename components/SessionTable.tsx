@@ -1,25 +1,25 @@
-import { Table, Thead, Tbody, Tr, Th, Td, Button } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
+import { Table, Thead, Tbody, Tr, Th, Td, Button } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 interface Session {
-  id: string
-  applicationName: string
-  sessionName: string
-  vectorStore: string
-  embeddingMethod: string
-  status: string
+  id: string;
+  applicationName: string;
+  sessionName: string;
+  vectorStore: string;
+  embeddingMethod: string;
+  status: string;
 }
 
 interface SessionTableProps {
-  sessions: Session[]
+  sessions: Session[];
 }
 
 export const SessionTable = ({ sessions }: SessionTableProps) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleViewSession = (sessionId: string) => {
-    router.push(`/sessions/${sessionId}`)
-  }
+    router.push(`/sessions/${sessionId}`);
+  };
 
   return (
     <Table variant="simple">
@@ -54,5 +54,5 @@ export const SessionTable = ({ sessions }: SessionTableProps) => {
         ))}
       </Tbody>
     </Table>
-  )
-}
+  );
+};

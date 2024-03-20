@@ -7,18 +7,18 @@ import {
   Text,
   Textarea,
   VStack,
-} from '@chakra-ui/react'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { fetchSessionIndexes, sendSearchQuery } from '@/utils/api'
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { fetchSessionIndexes, sendSearchQuery } from '@/utils/api';
 
 const SessionPage = () => {
-  const router = useRouter()
-  const { sessionId } = router.query
-  const [selectedIndexes, setSelectedIndexes] = useState([])
-  const [queryText, setQueryText] = useState('')
-  const [chatMessages, setChatMessages] = useState([])
+  const router = useRouter();
+  const { sessionId } = router.query;
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
+  const [queryText, setQueryText] = useState('');
+  const [chatMessages, setChatMessages] = useState([]);
 
   const { data: indexes, isLoading: isLoadingIndexes } = useQuery(
     ['sessionIndexes', sessionId],
@@ -26,27 +26,27 @@ const SessionPage = () => {
     {
       enabled: !!sessionId,
     },
-  )
+  );
 
   const searchMutation = useMutation(sendSearchQuery, {
     onSuccess: (data) => {
       setChatMessages((prevMessages) => [
         ...prevMessages,
         { text: queryText, response: data.response },
-      ])
-      setQueryText('')
+      ]);
+      setQueryText('');
     },
-  })
+  });
 
   const handleCheckboxChange = (values) => {
-    setSelectedIndexes(values)
-  }
+    setSelectedIndexes(values);
+  };
 
   const handleSendQuery = () => {
     if (queryText.trim() !== '') {
-      searchMutation.mutate({ queryText, indexes: selectedIndexes })
+      searchMutation.mutate({ queryText, indexes: selectedIndexes });
     }
-  }
+  };
 
   return (
     <Box display="flex" flexDirection="row" p={4}>
@@ -96,7 +96,7 @@ const SessionPage = () => {
         </Button>
       </VStack>
     </Box>
-  )
-}
+  );
+};
 
-export default SessionPage
+export default SessionPage;

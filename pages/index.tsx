@@ -1,17 +1,16 @@
-import { Box, Flex, Heading, Spinner } from '@chakra-ui/react'
-import { useQuery } from '@tanstack/react-query'
-import { SessionForm } from '@/components/SessionForm'
-import { SessionTable } from '@/components/SessionTable'
-import type { NextPage } from 'next'
-import { fetchSessions } from '@/utils/api'
-
+import { Box, Flex, Heading, Spinner } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { SessionForm } from '@/components/SessionForm';
+import { SessionTable } from '@/components/SessionTable';
+import type { NextPage } from 'next';
+import { fetchSessions } from '@/utils/api';
 
 const Home: NextPage = () => {
   const {
     data: sessions,
     isLoading,
     error,
-  } = useQuery(['sessions'], fetchSessions)
+  } = useQuery(['sessions'], fetchSessions);
 
   return (
     <Box p={4}>
@@ -33,7 +32,7 @@ const Home: NextPage = () => {
         </Box>
       </Flex>
     </Box>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

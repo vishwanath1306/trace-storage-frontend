@@ -1,34 +1,34 @@
-import { Box, Button, Text, Textarea, VStack } from '@chakra-ui/react'
-import { useState } from 'react'
-import { useMutation } from '@tanstack/react-query'
-import { sendSearchQuery } from '@/utils/api'
+import { Box, Button, Text, Textarea, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { sendSearchQuery } from '@/utils/api';
 
 interface SearchChatProps {
-  sessionId: string | string[] | undefined
-  selectedIndexes: string[]
+  sessionId: string | string[] | undefined;
+  selectedIndexes: string[];
 }
 
 const SearchChat = ({ sessionId, selectedIndexes }: SearchChatProps) => {
-  const [queryText, setQueryText] = useState('')
+  const [queryText, setQueryText] = useState('');
   const [chatMessages, setChatMessages] = useState<
     { text: string; response: string }[]
-  >([])
+  >([]);
 
   const searchMutation = useMutation(sendSearchQuery, {
     onSuccess: (data) => {
       setChatMessages((prevMessages) => [
         ...prevMessages,
         { text: queryText, response: data.response },
-      ])
-      setQueryText('')
+      ]);
+      setQueryText('');
     },
-  })
+  });
 
   const handleSendQuery = () => {
     if (queryText.trim() !== '') {
-      searchMutation.mutate({ sessionId, queryText, indexes: selectedIndexes })
+      searchMutation.mutate({ sessionId, queryText, indexes: selectedIndexes });
     }
-  }
+  };
 
   return (
     <VStack spacing={4} alignItems="flex-start" w="full">
@@ -58,7 +58,7 @@ const SearchChat = ({ sessionId, selectedIndexes }: SearchChatProps) => {
         Send
       </Button>
     </VStack>
-  )
-}
+  );
+};
 
-export default SearchChat
+export default SearchChat;

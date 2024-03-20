@@ -1,10 +1,10 @@
-import { Checkbox, CheckboxGroup, Stack, Text, VStack } from '@chakra-ui/react'
-import { useQuery } from '@tanstack/react-query'
-import { fetchSessionIndexes } from '@/utils/api'
+import { Checkbox, CheckboxGroup, Stack, Text, VStack } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchSessionIndexes } from '@/utils/api';
 
 interface IndexSelectionProps {
-  sessionId: string | string[] | undefined
-  onIndexChange: (indexes: string[]) => void
+  sessionId: string | string[] | undefined;
+  onIndexChange: (indexes: string[]) => void;
 }
 
 const IndexSelection = ({ sessionId, onIndexChange }: IndexSelectionProps) => {
@@ -14,7 +14,7 @@ const IndexSelection = ({ sessionId, onIndexChange }: IndexSelectionProps) => {
     {
       enabled: !!sessionId,
     },
-  )
+  );
 
   return (
     <VStack spacing={4} alignItems="flex-start">
@@ -38,7 +38,7 @@ const IndexSelection = ({ sessionId, onIndexChange }: IndexSelectionProps) => {
         </CheckboxGroup>
       )}
     </VStack>
-  )
-}
+  );
+};
 
-export default IndexSelection
+export default IndexSelection;
