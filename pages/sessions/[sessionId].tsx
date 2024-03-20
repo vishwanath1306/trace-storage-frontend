@@ -1,3 +1,4 @@
+import { fetchSessionIndexes, sendSearchQuery } from '@/utils/api';
 import {
   Box,
   Button,
@@ -8,21 +9,20 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { fetchSessionIndexes, sendSearchQuery } from '@/utils/api';
 
 const SessionPage = () => {
   const router = useRouter();
   const { sessionId } = router.query;
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   const [queryText, setQueryText] = useState('');
-  const [chatMessages, setChatMessages] = useState([]);
+  const [chatMessages, setChatMessages] = useState<{ text: string; response: any }[]>([]);
 
   const { data: indexes, isLoading: isLoadingIndexes } = useQuery(
     ['sessionIndexes', sessionId],
-    () => fetchSessionIndexes(sessionId),
+    () => fetchSessionIndexes(sessionId as string),
     {
       enabled: !!sessionId,
     },
@@ -37,17 +37,19 @@ const SessionPage = () => {
       setQueryText('');
     },
   });
-
-  const handleCheckboxChange = (values) => {
+  const handleCheckboxChange = (values: string[]) => {
     setSelectedIndexes(values);
   };
 
   const handleSendQuery = () => {
     if (queryText.trim() !== '') {
-      searchMutation.mutate({ queryText, indexes: selectedIndexes });
+      searchMutation.mutate({
+        query: queryText,
+        indexes: selectedIndexes,
+        sessionId: sessionId as string,
+      });
     }
   };
-
   return (
     <Box display="flex" flexDirection="row" p={4}>
       <VStack flex="1" spacing={4} alignItems="flex-start">
@@ -59,7 +61,7 @@ const SessionPage = () => {
         ) : (
           <CheckboxGroup colorScheme="green" onChange={handleCheckboxChange}>
             <Stack spacing={2}>
-              {indexes?.map((index) => (
+              {indexes?.index_names?.map((index) => (
                 <Checkbox key={index} value={index}>
                   {index}
                 </Checkbox>

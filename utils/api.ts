@@ -27,22 +27,25 @@ const createSession = async (sessionData: CreateSessionData): Promise<any> => {
   return response.json();
 };
 
-// Mock API call to simulate fetching indexes based on session ID
-const fetchIndexes = async (sessionId: string): Promise<any[]> => {
-  // This would be a call to fetch indexes for a specific session.
-  // Returning a mock response for demonstration.
-  console.log('Fetching indexes for session:', sessionId);
-  return [
-    { id: 'index1', name: 'Index 1' },
-    { id: 'index2', name: 'Index 2' },
-    // Add more mock indexes as needed
-  ];
+type IndexResponseType = {
+  message: string;
+  index_names: string[];
+};
+
+const fetchSessionIndexes = async (
+  sessionId: string,
+): Promise<IndexResponseType> => {
+  const indexes = await fetch(
+    `${API_ENDPOINT}/get-index-names?session_id=${sessionId}`,
+  );
+  return await indexes.json();
 };
 
 // Mock API call to simulate sending a search query
 const sendSearchQuery = async (queryData: {
   query: string;
   indexes: string[];
+  sessionId: string;
 }): Promise<any> => {
   // Typically, you would send this data to a backend service that handles the search.
   console.log('Sending search query with data:', queryData);
@@ -55,4 +58,4 @@ export const useFetchSessions = () => {
 };
 
 // Exporting the API functions so they can be used elsewhere in the project
-export { fetchSessions, createSession, fetchIndexes, sendSearchQuery };
+export { fetchSessions, createSession, fetchSessionIndexes, sendSearchQuery };

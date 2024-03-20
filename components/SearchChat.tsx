@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { sendSearchQuery } from '@/utils/api';
 
 interface SearchChatProps {
-  sessionId: string | string[] | undefined;
+  sessionId: string;
   selectedIndexes: string[];
 }
 
@@ -26,7 +26,11 @@ const SearchChat = ({ sessionId, selectedIndexes }: SearchChatProps) => {
 
   const handleSendQuery = () => {
     if (queryText.trim() !== '') {
-      searchMutation.mutate({ sessionId, queryText, indexes: selectedIndexes });
+      searchMutation.mutate({
+        sessionId,
+        query: queryText,
+        indexes: selectedIndexes,
+      });
     }
   };
 
