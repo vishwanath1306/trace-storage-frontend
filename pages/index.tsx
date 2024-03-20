@@ -3,16 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { SessionForm } from '@/components/SessionForm'
 import { SessionTable } from '@/components/SessionTable'
 import type { NextPage } from 'next'
+import { fetchSessions } from '@/utils/api'
 
-const fetchSessions = async () => {
-  // This is where you would fetch data from an API.
-  // For now, we're simulating fetching data by returning a mock JSON.
-  const response = await fetch('/mockData/sessions.json')
-  if (!response.ok) {
-    throw new Error('Network response was not ok')
-  }
-  return response.json()
-}
 
 const Home: NextPage = () => {
   const {

@@ -1,11 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 
-// Mock API call to simulate fetching sessions
+const API_ENDPOINT = process.env.REACT_APP_API_BASE_URL
+
+console.log(API_ENDPOINT)
+
+const SESSION_ENDPOINT = `${API_ENDPOINT}/sessions`
+
 const fetchSessions = async (): Promise<any[]> => {
-  // In a real scenario, you would fetch this data from an actual API endpoint.
-  // For now, we're simulating this by importing the mock data directly.
-  const sessions = await import('../public/mockData/sessions.json')
-  return sessions.default // Adjust based on how your project is set up to handle default exports
+  const sessions = await fetch(`${SESSION_ENDPOINT}/get-all-sessions`)
+  return sessions.json()
 }
 
 // Mock API call to simulate creating a session
