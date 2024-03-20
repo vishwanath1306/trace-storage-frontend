@@ -32,9 +32,9 @@ export const SessionTable = ({ sessions }: SessionTableProps) => {
             <Td>{session.name}</Td>
             <Td>{session.vector_store}</Td>
             <Td>{session.embedding_method}</Td>
-            <Td>{session.status ? 'Ready' : 'Loading'}</Td>
+            <Td>{session.current_status ? 'Ready' : 'Loading'}</Td>
             <Td>
-              {session.status && (
+              {session.current_status && (
                 <Button
                   colorScheme="blue"
                   size="sm"

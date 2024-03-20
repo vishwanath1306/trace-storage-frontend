@@ -3,7 +3,7 @@ export interface SessionType {
   embedding_method: string;
   id: string;
   name: string;
-  status: boolean;
+  current_status: boolean;
   updated_at: string;
   vector_store: string;
   application_name: string;

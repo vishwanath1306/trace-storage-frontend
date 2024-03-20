@@ -28,8 +28,8 @@ const fetchVectorStores = async () => {
 
 export const SessionForm = () => {
   const toast = useToast();
-  const [sessionName, setSessionName] = useState('');
-  const [application, setApplication] = useState('');
+  const [sessionName, setSessionName] = useState('Your session name');
+  const [application, setApplication] = useState('ssh');
   const [file, setFile] = useState<File | null>(null);
   const [embedding, setEmbedding] = useState('');
   const [vectorStore, setVectorStore] = useState('');
@@ -99,8 +99,9 @@ export const SessionForm = () => {
           value={application}
           onChange={(e) => setApplication(e.target.value)}
         >
-          <option value="SSH">SSH</option>
-          <option value="UI">UI</option>
+          <option value="ssh">SSH</option>
+          <option value="ui">
+          </option>
         </Select>
       </FormControl>
       <FormControl isRequired mb={4}>

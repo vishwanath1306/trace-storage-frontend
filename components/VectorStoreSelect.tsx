@@ -1,7 +1,22 @@
 // vectorStoreselect.tsx
-import { FormControl, FormLabel, Select, Spinner } from '@chakra-ui/react';
+import { API_ENDPOINT } from '@/utils/api';
+import { FormControl, FormLabel, Select } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
 
-const vectorStores = ['Milvus', 'Pinecone'];
+const fetchVectorStores = async () => {
+  const response = await fetch(`${API_ENDPOINT}/get-vector-databases`);
+
+  return (await response.json()) as unknown as {
+    [key: string]: string;
+  };
+};
+const useVectorStores = () => {
+  const { data, isLoading, isError } = useQuery(
+    ['vectorStores'],
+    fetchVectorStores,
+  );
+  return { data, isLoading, isError };
+};
 
 const VectorStoreSelect = ({
   value,
@@ -10,6 +25,7 @@ const VectorStoreSelect = ({
   value: string;
   setValue: Function;
 }) => {
+  const { data: vectorStores } = useVectorStores();
   return (
     <FormControl isRequired mb={4}>
       <FormLabel>Embedding</FormLabel>
@@ -18,11 +34,12 @@ const VectorStoreSelect = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
       >
-        {vectorStores.map((vectorStore) => (
-          <option key={vectorStore} value={vectorStore}>
-            {vectorStore}
-          </option>
-        ))}
+        {vectorStores &&
+          Object.keys(vectorStores).map((vectorStore) => (
+            <option key={vectorStore} value={vectorStore}>
+              {vectorStore}
+            </option>
+          ))}
       </Select>
     </FormControl>
   );

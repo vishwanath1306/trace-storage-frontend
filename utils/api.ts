@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CreateSessionData, SessionType } from './session.types';
 
-const API_ENDPOINT = process.env.NEXT_PUBLIC_API_BASE_URL;
+export const API_ENDPOINT = process.env.NEXT_PUBLIC_API_BASE_URL;
 const SESSION_ID = process.env.NEXT_PUBLIC_SESSION_ID;
 
 const fetchSessions = async (): Promise<SessionType[]> => {
