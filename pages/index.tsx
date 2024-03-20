@@ -10,6 +10,7 @@ const Home: NextPage = () => {
     data: sessions,
     isLoading,
     error,
+    refetch: refetchSessions,
   } = useQuery(['sessions'], fetchSessions);
 
   return (
@@ -17,7 +18,7 @@ const Home: NextPage = () => {
       <Heading mb={6}>Log Search</Heading>
       <Flex direction={{ base: 'column', md: 'row' }} gap={6}>
         <Box flex="1">
-          <SessionForm />
+          <SessionForm refetchSessions={refetchSessions} />
         </Box>
         <Box flex="2">
           {isLoading ? (

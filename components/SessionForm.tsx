@@ -26,7 +26,11 @@ const fetchVectorStores = async () => {
   return ['Milvus', 'Pinecone'];
 };
 
-export const SessionForm = () => {
+export const SessionForm = ({
+  refetchSessions,
+}: {
+  refetchSessions: Function;
+}) => {
   const toast = useToast();
   const [sessionName, setSessionName] = useState('Your session name');
   const [application, setApplication] = useState('ssh');
@@ -52,6 +56,7 @@ export const SessionForm = () => {
           duration: 5000,
           isClosable: true,
         });
+        refetchSessions();
       },
       onError: () => {
         toast({
@@ -100,8 +105,7 @@ export const SessionForm = () => {
           onChange={(e) => setApplication(e.target.value)}
         >
           <option value="ssh">SSH</option>
-          <option value="ui">
-          </option>
+          <option value="ui"></option>
         </Select>
       </FormControl>
       <FormControl isRequired mb={4}>
