@@ -56,7 +56,7 @@ export const getRadioButton = (options, selectedOption, setSelectedOption) => {
 
 export const getRadioButtonHookForm = (options, field, fieldState) => {
     return (
-        <div className="card flex justify-content-center">
+        <div className="card flex justify-content-center p-2" style={{backgroundColor: "#F4F6FA"}}>
             <div className="flex flex-column gap-3">
                 {options.map((option) => {
                     return (
