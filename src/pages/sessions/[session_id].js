@@ -8,6 +8,7 @@ import Logo from "@/components/Logo";
 import MainLayout from "@/layout/Layout";
 import { Button } from "primereact/button";
 
+
 export default function Session() {
   const toast = useRef(null);
   const router = useRouter();
@@ -44,6 +45,7 @@ export default function Session() {
         style={{
           // minHeight: "80vh",
           marginTop: "100px",
+
         }}
       >
         <div
@@ -80,6 +82,7 @@ export default function Session() {
               className="shadow-5 border-round-md bg-white"
               style={{ padding: "20px", minHeight: "350px" }}
             >
+
               <p>
                 reverse mapping checking getaddrinfo for
                 207-204-204-084.yourlink.ca [207.204.204.84] failed - POSSIBLE
@@ -118,6 +121,7 @@ export default function Session() {
                 List all IP Addresses trying to hack
               </p>
               <Button label="Submit" />
+
             </div>
           </div>
         </div>

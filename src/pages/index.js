@@ -8,17 +8,14 @@ import { useRouter } from "next/router";
 import { classNames } from "primereact/utils";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-
 import { Dropdown } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
-
 import {
   PageContainer,
   ElementContainer,
   FrameContainer,
 } from "@/layout/Containers";
-
 import {
   applications,
   embeddingMethods,
@@ -27,7 +24,6 @@ import {
 import { getRadioButtonHookForm } from "@/utils/ui/buttons";
 import { Divider } from "@/layout/Elements";
 import MainLayout from "@/layout/Layout";
-
 export default function Home() {
   const toast = useRef(null);
   const router = useRouter();
@@ -37,7 +33,6 @@ export default function Home() {
   );
   const [sessionIdCookie, setSessionIdCookie] = useCookie(null, "session_id");
   const [sessionId, setSessionId] = useState(null);
-
   const show = (data) => {
     toast.current.show({
       severity: "info",
@@ -46,7 +41,6 @@ export default function Home() {
       life: 3000,
     });
   };
-
   const error = (data) => {
     toast.current.show({
       severity: "error",
@@ -55,7 +49,6 @@ export default function Home() {
       life: 3000,
     });
   };
-
   const defaultValues = {
     session_name: "Test Session 1",
     application_name: "SSH",
@@ -63,23 +56,19 @@ export default function Home() {
     embedding_method: "Google",
     vector_database: "Milvus",
   };
-
   const redirect = (path) => {
     router.push(path);
   };
-
   const {
     control,
     formState: { errors },
     handleSubmit,
     setValue,
   } = useForm({ defaultValues });
-
   const onFileSelect = (e) => {
     const file = e.files[0];
     setValue("request_file", file, { shouldValidate: true });
   };
-
   const onSubmit = async (data) => {
     const response = await create(data);
     const { session_id } = response;
@@ -93,7 +82,6 @@ export default function Home() {
       error("response");
     }
   };
-
   const getFormErrorMessage = (name) => {
     return errors[name] ? (
       <small className="p-error">{errors[name].message}</small>
@@ -101,7 +89,6 @@ export default function Home() {
       <small className="p-error">&nbsp;</small>
     );
   };
-
   return (
     <MainLayout>
       <div
@@ -244,9 +231,7 @@ export default function Home() {
                   )}
                 />
               </div>
-
               <Divider />
-
               <div
                 className="shadow-3 bg-white p-3 border-round-xl"
                 style={{ minWidth: "265px"}}
