@@ -1,31 +1,35 @@
 {
-  "name": "cs377",
-  "version": "0.1.0",
-  "private": true,
+  "name": "log-search-project",
+  "version": "1.0.0",
+  "description": "A project to search through logs using Typescript, Chakra UI, and Next.js.",
+  "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start -p 5998",
+    "lint": "next lint",
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "bootstrap": "^5.3.3",
-    "eslint": "8.47.0",
-    "eslint-config-next": "13.4.19",
-    "fs": "^0.0.1-security",
-    "github-markdown-css": "^5.2.0",
-    "next": "13.4.19",
-    "path": "^0.12.7",
-    "pg": "^8.11.3",
-    "primeflex": "^3.3.1",
-    "primeicons": "^6.0.1",
-    "primereact": "^9.6.4",
-    "qs": "^6.11.2",
+    "@chakra-ui/icons": "^2.0.3",
+    "@chakra-ui/react": "^2.2.1",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@tanstack/react-query": "^4.0.0",
+    "@tanstack/react-query-devtools": "^5.28.4",
+    "framer-motion": "^6.2.8",
+    "next": "13.0.6",
     "react": "18.2.0",
-    "react-bootstrap": "^2.10.2",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.51.0",
-    "react-router-dom": "^6.16.0",
-    "sqlite3": "^5.1.6"
-  }
+    "react-icons": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "@types/react": "18.2.67",
+    "@types/react-dom": "^18.0.5",
+    "prettier": "^3.2.5",
+    "typescript": "5.4.2"
+  },
+  "license": "MIT",
+  "private": true
 }
