@@ -1,22 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
+import { CreateSessionData, SessionType } from './session.types';
 
-const API_ENDPOINT = process.env.REACT_APP_API_BASE_URL;
+const API_ENDPOINT = process.env.NEXT_PUBLIC_API_BASE_URL;
+const SESSION_ID = process.env.NEXT_PUBLIC_SESSION_ID;
 
-console.log(API_ENDPOINT);
-
-const SESSION_ENDPOINT = `${API_ENDPOINT}/sessions`;
-
-const fetchSessions = async (): Promise<any[]> => {
-  const sessions = await fetch(`${SESSION_ENDPOINT}/get-all-sessions`);
+const fetchSessions = async (): Promise<SessionType[]> => {
+  const sessions = await fetch(
+    `${API_ENDPOINT}/get-all-sessions?session_id=${SESSION_ID}`,
+  );
   return sessions.json();
 };
 
-// Mock API call to simulate creating a session
-const createSession = async (sessionData: any): Promise<any> => {
-  // Here you would typically make a POST request to your backend to create a session.
-  // Since this is a mock, we'll just return a success message.
-  console.log('Creating session with data:', sessionData);
-  return { message: 'Session created successfully', data: sessionData };
+const createSession = async (sessionData: CreateSessionData): Promise<any> => {
+  const formData = new FormData();
+  formData.append('session_name', sessionData.sessionName);
+  formData.append('vector_database', sessionData.vectorStore);
+  formData.append('embedding_method', sessionData.embedding);
+  formData.append('request_file', sessionData.file);
+  formData.append('application_name', sessionData.application);
+
+  const response = await fetch(`${API_ENDPOINT}/create`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  return response.json();
 };
 
 // Mock API call to simulate fetching indexes based on session ID

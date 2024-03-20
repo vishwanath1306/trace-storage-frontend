@@ -10,6 +10,9 @@ import {
 } from '@chakra-ui/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import EmbeddingSelect from './EmbeddingSelect';
+import VectorStoreSelect from './VectorStoreSelect';
+import { createSession } from '@/utils/api';
 
 const fetchEmbeddings = async () => {
   // Placeholder for fetching embeddings from an API
@@ -21,13 +24,6 @@ const fetchVectorStores = async () => {
   // Placeholder for fetching vector stores from an API
   // Replace with actual API call
   return ['Milvus', 'Pinecone'];
-};
-
-const createSession = async (sessionData: any) => {
-  // Placeholder for session creation API call
-  // Replace with actual API call
-  console.log('Creating session with', sessionData);
-  return { success: true };
 };
 
 export const SessionForm = () => {
@@ -115,42 +111,8 @@ export const SessionForm = () => {
           onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
         />
       </FormControl>
-      <FormControl isRequired mb={4}>
-        <FormLabel>Embedding</FormLabel>
-        <Select
-          placeholder="Select embedding"
-          value={embedding}
-          onChange={(e) => setEmbedding(e.target.value)}
-        >
-          {isLoadingEmbeddings ? (
-            <Spinner />
-          ) : (
-            embeddings?.map((emb: string) => (
-              <option key={emb} value={emb}>
-                {emb}
-              </option>
-            ))
-          )}
-        </Select>
-      </FormControl>
-      <FormControl isRequired mb={4}>
-        <FormLabel>Vector Store</FormLabel>
-        <Select
-          placeholder="Select vector store"
-          value={vectorStore}
-          onChange={(e) => setVectorStore(e.target.value)}
-        >
-          {isLoadingVectorStores ? (
-            <Spinner />
-          ) : (
-            vectorStores?.map((store: string) => (
-              <option key={store} value={store}>
-                {store}
-              </option>
-            ))
-          )}
-        </Select>
-      </FormControl>
+      <EmbeddingSelect value={embedding} setValue={setEmbedding} />
+      <VectorStoreSelect value={vectorStore} setValue={setVectorStore} />
       <Button type="submit" colorScheme="blue" isLoading={isCreatingSession}>
         Create Session
       </Button>

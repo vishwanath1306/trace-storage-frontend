@@ -1,17 +1,9 @@
+import { SessionType } from '@/utils/session.types';
 import { Table, Thead, Tbody, Tr, Th, Td, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-interface Session {
-  id: string;
-  applicationName: string;
-  sessionName: string;
-  vectorStore: string;
-  embeddingMethod: string;
-  status: string;
-}
-
 interface SessionTableProps {
-  sessions: Session[];
+  sessions: SessionType[] | undefined;
 }
 
 export const SessionTable = ({ sessions }: SessionTableProps) => {
@@ -34,21 +26,23 @@ export const SessionTable = ({ sessions }: SessionTableProps) => {
         </Tr>
       </Thead>
       <Tbody>
-        {sessions.map((session) => (
+        {sessions?.map((session) => (
           <Tr key={session.id}>
-            <Td>{session.applicationName}</Td>
-            <Td>{session.sessionName}</Td>
-            <Td>{session.vectorStore}</Td>
-            <Td>{session.embeddingMethod}</Td>
-            <Td>{session.status}</Td>
+            <Td>{session.application_name}</Td>
+            <Td>{session.name}</Td>
+            <Td>{session.vector_store}</Td>
+            <Td>{session.embedding_method}</Td>
+            <Td>{session.status ? 'Ready' : 'Loading'}</Td>
             <Td>
-              <Button
-                colorScheme="blue"
-                size="sm"
-                onClick={() => handleViewSession(session.id)}
-              >
-                View
-              </Button>
+              {session.status && (
+                <Button
+                  colorScheme="blue"
+                  size="sm"
+                  onClick={() => handleViewSession(session.id)}
+                >
+                  View
+                </Button>
+              )}
             </Td>
           </Tr>
         ))}
