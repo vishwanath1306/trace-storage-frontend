@@ -18,7 +18,7 @@ const SearchChat = ({ sessionId, selectedIndexes }: SearchChatProps) => {
     onSuccess: (data) => {
       setChatMessages((prevMessages) => [
         ...prevMessages,
-        { text: queryText, response: data.response },
+        { text: queryText, response: data.result_value.join(' ') },
       ]);
       setQueryText('');
     },

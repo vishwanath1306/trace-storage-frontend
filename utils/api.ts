@@ -41,15 +41,32 @@ const fetchSessionIndexes = async (
   return await indexes.json();
 };
 
-// Mock API call to simulate sending a search query
+type SearchResponse = {
+  message: string;
+  result_value: string[];
+  log_lines: {
+    index_name: string;
+    log_lines: string[];
+  }[];
+};
 const sendSearchQuery = async (queryData: {
   query: string;
   indexes: string[];
   sessionId: string;
-}): Promise<any> => {
-  // Typically, you would send this data to a backend service that handles the search.
-  console.log('Sending search query with data:', queryData);
-  return { message: 'Query sent successfully', data: queryData };
+}): Promise<SearchResponse> => {
+  const indexes = await fetch(`${API_ENDPOINT}/query-logs`, {
+    method: 'POST',
+    body: JSON.stringify({
+      query_string: queryData.query,
+      index_names: queryData.indexes,
+      session_id: queryData.sessionId,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return await indexes.json();
 };
 
 // Custom hook to use the fetchSessions API call with react-query

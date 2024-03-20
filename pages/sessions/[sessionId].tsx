@@ -18,7 +18,9 @@ const SessionPage = () => {
   const { sessionId } = router.query;
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   const [queryText, setQueryText] = useState('');
-  const [chatMessages, setChatMessages] = useState<{ text: string; response: any }[]>([]);
+  const [chatMessages, setChatMessages] = useState<
+    { text: string; response: any }[]
+  >([]);
 
   const { data: indexes, isLoading: isLoadingIndexes } = useQuery(
     ['sessionIndexes', sessionId],
@@ -32,7 +34,7 @@ const SessionPage = () => {
     onSuccess: (data) => {
       setChatMessages((prevMessages) => [
         ...prevMessages,
-        { text: queryText, response: data.response },
+        { text: queryText, response: data.result_value.join(' ') },
       ]);
       setQueryText('');
     },
