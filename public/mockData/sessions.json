@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "applicationName": "SSH",
+    "sessionName": "Session 1",
+    "vectorStore": "Milvus",
+    "embeddingMethod": "Google",
+    "status": "In Progress"
+  },
+  {
+    "id": "3",
+    "applicationName": "SSH",
+    "sessionName": "Session 3",
+    "vectorStore": "Milvus",
+    "embeddingMethod": "Google",
+    "status": "Failed"
+  },
+  {
+    "id": "4",
+    "applicationName": "UI",
+    "sessionName": "Session 4",
+    "vectorStore": "Pinecone",
+    "embeddingMethod": "OpenAI",
+    "status": "Completed"
+  }
+]
