@@ -4,6 +4,7 @@ import {
   Checkbox,
   CheckboxGroup,
   Flex,
+  Grid,
   Stack,
   Text,
   Textarea,
@@ -61,9 +62,9 @@ export const SessionChat = ({
     }
   };
   return (
-    <Flex height="100vh">
+    <Grid height="100vh" templateColumns="repeat(2, 1fr)" gap={6}>
       <Flex width="100%">
-        <VStack flex="1" p={4} spacing={4} alignItems="flex-start">
+        <VStack p={4} spacing={4} alignItems="flex-start">
           <Text fontSize="xl" fontWeight="bold">
             Indexes
           </Text>
@@ -119,6 +120,6 @@ export const SessionChat = ({
         </VStack>
       </Flex>
       <LogLinesPane />
-    </Flex>
+    </Grid>
   );
 };
