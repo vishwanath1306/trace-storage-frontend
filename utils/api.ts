@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { CreateSessionData, SessionType } from './session.types';
+import { CreateSessionData, SearchResponse, SessionType } from './session.types';
 
 export const API_ENDPOINT = process.env.NEXT_PUBLIC_API_BASE_URL;
 const SESSION_ID = process.env.NEXT_PUBLIC_SESSION_ID;
@@ -41,14 +41,7 @@ const fetchSessionIndexes = async (
   return await indexes.json();
 };
 
-type SearchResponse = {
-  message: string;
-  result_value: string[];
-  log_lines: {
-    index_name: string;
-    log_lines: string[];
-  }[];
-};
+
 const sendSearchQuery = async (queryData: {
   query: string;
   indexes: string[];
