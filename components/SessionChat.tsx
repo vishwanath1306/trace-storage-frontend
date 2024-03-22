@@ -112,7 +112,7 @@ export const SessionChat = ({
             colorScheme="blue"
             onClick={handleSendQuery}
             isLoading={searchMutation.isLoading}
-            isDisabled={selectedIndexes.length === 0 || queryText.trim() === ''}
+            isDisabled={queryText.trim() === ''}
           >
             Send
           </Button>
