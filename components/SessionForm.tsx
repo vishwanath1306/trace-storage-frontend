@@ -105,6 +105,8 @@ export const SessionForm = ({
           onChange={(e) => setApplication(e.target.value)}
         >
           <option value="ssh">SSH</option>
+          <option value="ssh">HDFS</option>
+          <option value="ssh">HTTP</option>
           <option value="ui"></option>
         </Select>
       </FormControl>
