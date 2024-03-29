@@ -28,9 +28,9 @@ const VectorStoreSelect = ({
   const { data: vectorStores } = useVectorStores();
   return (
     <FormControl isRequired mb={4}>
-      <FormLabel>Embedding</FormLabel>
+      <FormLabel>Vector Database</FormLabel>
       <Select
-        placeholder="Select embedding"
+        placeholder="Select Vector Database"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       >
