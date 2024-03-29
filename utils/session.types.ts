@@ -19,7 +19,7 @@ export interface CreateSessionData {
 
 export interface SearchResponse {
   message: string;
-  result_value: string[];
+  result_value: string;
   log_lines: {
     index_name: string;
     log_lines: string[];
