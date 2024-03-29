@@ -41,7 +41,7 @@ export const SessionChat = ({
         {
           text: queryText,
           // todo - change this once BE makes this a string
-          response: data.result_value.join(' '),
+          response: data.result_value,
           log_lines: data.log_lines,
         },
       ]);
