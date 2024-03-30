@@ -61,7 +61,7 @@ export const SessionChat = ({
     }
   };
   return (
-    <Grid height="100vh" templateColumns="1.5fr 1fr" gap={6}>
+    <Flex height="100vh" gap={6}>
       <Flex width="100%">
         <VStack p={4} spacing={4} alignItems="flex-start">
           <Text fontSize="xl" fontWeight="bold">
@@ -98,6 +98,7 @@ export const SessionChat = ({
           flex="2"
           spacing={4}
           alignItems="flex-start"
+          overflow="auto"
         >
           <Text fontSize="xl" fontWeight="bold">
             Search Chat
@@ -113,12 +114,13 @@ export const SessionChat = ({
             onClick={handleSendQuery}
             isLoading={searchMutation.isLoading}
             isDisabled={queryText.trim() === ''}
+            flexShrink="0"
           >
             Send
           </Button>
         </VStack>
       </Flex>
       <LogLinesPane />
-    </Grid>
+    </Flex>
   );
 };

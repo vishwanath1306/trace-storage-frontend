@@ -1,6 +1,16 @@
 import { SearchResponse } from '@/utils/session.types';
-import { Box, Button, Flex, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Collapse,
+  Flex,
+  IconButton,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import React from 'react';
 import { useSession } from './SessionProvider';
+import { ArrowDownIcon, ArrowUpIcon, UpDownIcon } from '@chakra-ui/icons';
 
 export interface ChatMessageType {
   text: string;
@@ -22,6 +32,7 @@ export const ChatMessages = ({
 };
 const MessageDisplay = ({ msg }: { msg: ChatMessageType }) => {
   const { setLogLines } = useSession();
+  const [show, setShow] = React.useState(true);
   return (
     <Box p={4} bg="gray.100" borderRadius="md">
       <Box>
@@ -30,14 +41,28 @@ const MessageDisplay = ({ msg }: { msg: ChatMessageType }) => {
       </Box>
       <Flex justifyContent="space-between">
         <Flex direction="column">
-          <Text fontWeight="bold">Response:</Text>
-          <Text>{msg.response}</Text>
+          <Flex alignItems="center" gap="2">
+            <Text fontWeight="bold">Response:</Text>
+            <Button
+              leftIcon={show ? <ArrowUpIcon /> : <ArrowDownIcon />}
+              aria-label="Show/Hide"
+              size="xs"
+              onClick={() => setShow(!show)}
+              mt={1}
+            >
+              {show ? 'Collapse' : 'Expand'}
+            </Button>
+          </Flex>
+          <Collapse in={show}>
+            <Text>{msg.response}</Text>
+          </Collapse>
         </Flex>
         <Button
           marginTop="auto"
           size="xs"
           variant="ghost"
           colorScheme="blue"
+          minWidth="auto"
           onClick={() => {
             setLogLines(msg.log_lines || []);
           }}
